@@ -5,6 +5,7 @@ var should = require('chai').should();
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../app');
+var Food = require('../../../models').Food;
 // Configure chai
 chai.use(chaiHttp);
 chai.should();
