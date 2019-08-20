@@ -35,7 +35,6 @@ describe("Foods", () => {
     })
   })
   describe("GET /api/v1/foods", () => {
-      // Test to get all students record
       it("should get all foods record", (done) => {
         chai.request(app)
         .get('/api/v1/foods')
@@ -48,7 +47,7 @@ describe("Foods", () => {
           done();
         });
        });
-      // Test to get single student record
+      
       it("should get a single food record", (done) => {
             chai.request(app)
             .get(`/api/v1/foods/1`)
@@ -61,7 +60,6 @@ describe("Foods", () => {
             });
        });
 
-      // Test to get single student record
       it("should not get a single student record", (done) => {
            chai.request(app)
                .get(`/api/v1/foods/889`)
