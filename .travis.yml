@@ -7,4 +7,5 @@ script:
 - npm test
 env:
 - mocha
-services: postgres
+services:
+  - postgresql
