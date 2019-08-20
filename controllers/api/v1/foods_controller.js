@@ -1,6 +1,6 @@
 var Food = require('../../../models').Food;
 
-var showFoods = function (req, res) {
+var index = function (req, res) {
   Food.findAll()
     .then(foods => {
       res.setHeader("Content-Type", "application/json");
@@ -12,6 +12,28 @@ var showFoods = function (req, res) {
     })
 }
 
+var show = function(req, res) {
+  Food.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(food => {
+    if (food) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(JSON.stringify(food));
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send();
+    }
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({ error });
+  })
+}
+
 module.exports = {
-  index: showFoods
+  index: index,
+  show: show
 }
