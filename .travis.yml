@@ -1,9 +1,8 @@
 language: node_js
 node_js: 
 - lts/*
-before_script:
-  - psql -c 'create database quantifiable_self_test;' -U postgres
 script:
+- npx sequelize db:create
 - npx sequelize db:migrate
 - npm test
 env:
