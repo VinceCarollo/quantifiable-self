@@ -33,7 +33,6 @@ var show = function(req, res) {
   })
 }
 
-// #Passes test,
 var create = function(req, res) {
   let name = req.body.food.name
   let calories = parseInt(req.body.food.calories)
