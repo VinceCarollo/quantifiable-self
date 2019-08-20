@@ -1,0 +1,11 @@
+language: node_js
+node_js: 
+- lts/*
+script:
+- npx sequelize db:create
+- npx sequelize db:migrate
+- npm test
+env:
+- mocha
+services:
+  - postgresql
