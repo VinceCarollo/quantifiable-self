@@ -34,8 +34,8 @@ var show = function(req, res) {
 }
 
 var create = function(req, res) {
-  let name = req.body.food.name
-  let calories = parseInt(req.body.food.calories)
+  let name = req.body.name
+  let calories = parseInt(req.body.calories)
   Food.create({
     name: name,
     calories: calories
@@ -49,9 +49,30 @@ var create = function(req, res) {
     })
 }
 
+var update = function(req, res) {
+  let name = req.body.name
+  let calories = parseInt(req.body.calories)
+  Food.update(
+    { calories: req.body.calories },
+    {
+      returning: true,
+      where: { name: req.body.name }
+    }
+  ).then(([rowsUpdate, [updatedFood] ]) => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(JSON.stringify(updatedFood));
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).send();
+    })
+}
+
+
 
 module.exports = {
   index: index,
   show: show,
-  create: create
+  create: create,
+  update: update
 }

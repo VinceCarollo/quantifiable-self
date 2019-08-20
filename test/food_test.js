@@ -16,12 +16,12 @@ describe("Foods", () => {
   before(async () => {
     await Food.bulkCreate([
       {
-        id: 900,
+        id: 9000,
         name: 'pizza',
         calories: 600
       },
       {
-        id: 901,
+        id: 9010,
         name: 'salad',
         calories: 100
       }
@@ -34,6 +34,7 @@ describe("Foods", () => {
       truncate: true
     })
   })
+
   describe("GET /api/v1/foods", () => {
       it("should get all foods record", (done) => {
         chai.request(app)
@@ -52,7 +53,7 @@ describe("Foods", () => {
     describe("GET /api/v1/foods/:id", () => {
       it("should get a single food record", (done) => {
             chai.request(app)
-            .get(`/api/v1/foods/900`)
+            .get(`/api/v1/foods/9000`)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -76,7 +77,7 @@ describe("Foods", () => {
     it("should create a single food record", (done) => {
           chai.request(app)
           .post(`/api/v1/foods`)
-          .send({ "food": { "name": "big fries", "calories": "1700"} })
+          .send({ "name": "big fries", "calories": "1700"})
           .end((err, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -85,15 +86,15 @@ describe("Foods", () => {
              Food.findOne({
               where: {name: 'big fries'}
             }).then(food =>{
-            should.exist(food)
-            done();
+              should.exist(food)
+              done();
             });
           });
      });
     it("should not make a single food record", (done) => {
           chai.request(app)
           .post(`/api/v1/foods`)
-          .send({ "food": { "calories": "1700"} })
+          .send({ "calories": "1700"})
           .end((err, res) => {
             res.should.have.status(400);
             done();
@@ -102,11 +103,43 @@ describe("Foods", () => {
     it("should not make a single food record", (done) => {
           chai.request(app)
           .post(`/api/v1/foods`)
-          .send({ "food": { "name": "big fries"} })
+          .send({ "name": "big fries"})
           .end((err, res) => {
             res.should.have.status(400);
             done();
           });
      });
+  });
+
+  describe("PATCH /api/v1/foods", () => {
+    it("should update a food resource", (done) => {
+      chai.request(app)
+      .patch(`/api/v1/foods`)
+      .send({ "name": "pizza", "calories": "1700"})
+      .end((err, res) => {
+        res.should.have.status(200);
+        Food.findOne({
+         where: {name: 'pizza'}
+        }).then(food =>{
+         food.calories.should.equal(1700)
+         done();
+        });
+      });
+    });
+
+    it("should not update a food resource with no calorie input", (done) => {
+      chai.request(app)
+      .patch(`/api/v1/foods`)
+      .send({ "name": "salad" })
+      .end((err, res) => {
+        res.should.have.status(400);
+        Food.findOne({
+         where: {name: 'salad'}
+        }).then(food =>{
+         food.calories.should.equal(100)
+         done();
+        });
+      });
+    });
   });
 });
