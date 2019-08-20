@@ -7,5 +7,7 @@ router.get('/:id', foodsController.show)
 
 router.post('/', foodsController.create)
 
+router.patch('/', foodsController.update)
+
 
 module.exports = router;
