@@ -33,7 +33,25 @@ var show = function(req, res) {
   })
 }
 
+var create = function(req, res) {
+  let name = req.body.food.name
+  let calories = parseInt(req.body.food.calories)
+  Food.create({
+    name: name,
+    calories: calories
+  }).then(food => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(JSON.stringify(food));
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).send({ error });
+    })
+}
+
+
 module.exports = {
   index: index,
-  show: show
+  show: show,
+  create: create
 }

@@ -5,5 +5,7 @@ router.get('/', foodsController.index)
 
 router.get('/:id', foodsController.show)
 
+router.post('/', foodsController.create)
+
 
 module.exports = router;
