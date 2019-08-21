@@ -9,5 +9,7 @@ router.post('/', foodsController.create)
 
 router.patch('/', foodsController.update)
 
+router.delete('/:id', foodsController.destroy)
+
 
 module.exports = router;
