@@ -79,6 +79,7 @@ describe("Meals", () => {
         res.body[0].should.be.a('object');
         res.body[0].name.should.equal('Breakfast');
         res.body[0].foods.should.be.a('array');
+        res.body[0].foods[0].name.should.equal('pizza')
         res.body[0].foods.should.have.lengthOf(1);
         res.body[1].foods.should.have.lengthOf(2);
         res.body.should.have.lengthOf(2);
