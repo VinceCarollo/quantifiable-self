@@ -154,5 +154,21 @@ describe("Meals", () => {
         done();
       });
     });
+    it("should return 404 if mealId does not exist", (done) => {
+      chai.request(app)
+      .post('/api/v1/meals/8010/foods/100000010')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
+    it("should return 404 if foodId does not exist", (done) => {
+      chai.request(app)
+      .post('/api/v1/meals/100000010/foods/9012')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
   });
 });
