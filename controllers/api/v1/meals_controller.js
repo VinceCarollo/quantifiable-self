@@ -46,7 +46,38 @@ var show = function(req, res) {
   })
 }
 
+var addFood = async function(req, res) {
+  let food = await Food.findOne({
+    where: {
+      id: req.params.food_id
+    }
+  })
+  let meal = await Meal.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  if (meal && food) {
+    MealFoods.create({
+      foodId: food.dataValues.id,
+      mealId: meal.dataValues.id
+    })
+    .then(() => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(201).send({ message: `Successfully added ${food.dataValues.name} to ${meal.dataValues.name}` });
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(500).send({ error });
+    })
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(404).send();
+  }
+}
+
 module.exports = {
   index: index,
-  show: show
+  show: show,
+  addFood: addFood
 }

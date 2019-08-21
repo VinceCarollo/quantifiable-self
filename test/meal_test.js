@@ -25,6 +25,11 @@ describe("Meals", () => {
         id: 9010,
         name: 'salad',
         calories: 100
+      },
+      {
+        id: 9012,
+        name: 'taco',
+        calories: 800
       }
     ])
     await Meal.bulkCreate([
@@ -106,6 +111,46 @@ describe("Meals", () => {
       .get('/api/v1/meals/10000010/foods')
       .end((err, res) => {
         res.should.have.status(404);
+        done();
+      });
+    });
+  });
+
+  describe("POST /api/v1/meals/:id/foods/:food_id", () => {
+    it("should add a food to a meal", (done) => {
+      chai.request(app)
+      .post('/api/v1/meals/8010/foods/9012')
+      .end((err, res) => {
+        res.should.have.status(201);
+        res.body.message.should.equal('Successfully added taco to Lunch')
+        Meal.findOne({
+          where: {
+            id: 8010
+          },
+          include: [
+            {
+              model: Food,
+              as: 'foods'
+            }
+          ]
+        })
+        .then(meal => {
+          meal.foods.length.should.equal(3)
+        })
+        Food.findOne({
+          where: {
+            id: 9012
+          },
+          include: [
+            {
+              model: Meal,
+              as: 'meals'
+            }
+          ]
+        })
+        .then(food => {
+          food.meals.length.should.equal(1)
+        })
         done();
       });
     });
