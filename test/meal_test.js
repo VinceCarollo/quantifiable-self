@@ -171,4 +171,58 @@ describe("Meals", () => {
       });
     });
   });
+  describe("Delete /api/v1/meals/:id/foods/:food_id", () => {
+    it("should delete a food from a meal", (done) => {
+      chai.request(app)
+      .delete('/api/v1/meals/8010/foods/9012')
+      .end((err, res) => {
+        res.should.have.status(204);
+        Meal.findOne({
+          where: {
+            id: 8010
+          },
+          include: [
+            {
+              model: Food,
+              as: 'foods'
+            }
+          ]
+        })
+        .then(meal => {
+          meal.foods.length.should.equal(2)
+        })
+        Food.findOne({
+          where: {
+            id: 9012
+          },
+          include: [
+            {
+              model: Meal,
+              as: 'meals'
+            }
+          ]
+        })
+        .then(food => {
+          food.meals.length.should.equal(0)
+        })
+        done();
+      });
+    });
+    it("should return 404 if mealId does not exist", (done) => {
+      chai.request(app)
+      .delete('/api/v1/meals/8010/foods/100000010')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
+    it("should return 404 if foodId does not exist", (done) => {
+      chai.request(app)
+      .delete('/api/v1/meals/100000010/foods/9012')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
+  });
 });

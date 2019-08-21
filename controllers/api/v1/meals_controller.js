@@ -76,8 +76,41 @@ var addFood = async function(req, res) {
   }
 }
 
+var removeFood = async function(req, res) {
+  let food = await Food.findOne({
+    where: {
+      id: req.params.food_id
+    }
+  })
+  let meal = await Meal.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+  if (meal && food) {
+    MealFoods.destroy({
+      where:{
+        foodId: food.dataValues.id,
+        mealId: meal.dataValues.id
+      }
+    })
+    .then(() => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(204).send();
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(500).send({ error });
+    })
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(404).send();
+  }
+}
+
 module.exports = {
   index: index,
   show: show,
-  addFood: addFood
+  addFood: addFood,
+  removeFood: removeFood
 }
