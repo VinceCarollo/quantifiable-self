@@ -68,11 +68,34 @@ var update = function(req, res) {
     })
 }
 
+var destroy = function(req, res) {
+  Food.destroy({
+      where: {
+        id: req.params.id
+      }
+      })
+    .then(food=> {
+      if (food){
+      res.setHeader("Content-Type", "application/json");
+      res.status(204).send();
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send();
+    }
+
+    })
+    .catch(error => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(500).send();
+    })
+}
+
 
 
 module.exports = {
   index: index,
   show: show,
   create: create,
-  update: update
+  update: update,
+  destroy: destroy
 }
