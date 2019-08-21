@@ -87,4 +87,27 @@ describe("Meals", () => {
       });
     });
   });
+  describe("GET /api/v1/meals/:id/foods", () => {
+    it("should get one meal record", (done) => {
+      chai.request(app)
+      .get('/api/v1/meals/8010/foods')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.id.should.equal(8010);
+        res.body.name.should.equal("Lunch");
+        res.body.foods.should.be.a("array");
+        res.body.foods.should.have.lengthOf(2);
+        res.body.foods[0].name.should.equal("pizza");
+        done();
+      });
+    });
+    it("should not get one meal record", (done) => {
+      chai.request(app)
+      .get('/api/v1/meals/10000010/foods')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
+  });
 });

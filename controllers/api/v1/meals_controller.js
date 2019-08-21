@@ -21,6 +21,32 @@ var index = function(req, res) {
   })
 }
 
+var show = function(req, res) {
+  Meal.findByPk(req.params.id,{
+    include: [
+      {
+        model: Food,
+        as: 'foods'
+      }
+    ]
+  })
+  .then(meal => {
+    if (meal){
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).send(JSON.stringify(meal));
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(404).send();
+  }
+
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({ error });
+  })
+}
+
 module.exports = {
-  index: index
+  index: index,
+  show: show
 }
