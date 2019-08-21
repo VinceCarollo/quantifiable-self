@@ -142,4 +142,29 @@ describe("Foods", () => {
       });
     });
   });
+
+  describe("DELETE /api/v1/foods/:id", () => {
+    it("should delete a food resource", (done) => {
+      chai.request(app)
+      .delete(`/api/v1/foods/9000`)
+      .end((err, res) => {
+        res.should.have.status(204);
+        Food.findOne({
+         where: {name: 'pizza'}
+        }).then(food =>{
+         should.not.exist(food)
+         done();
+        });
+      });
+    });
+    it("should not delete a food resource", (done) => {
+      chai.request(app)
+      .delete(`/api/v1/foods/10000`)
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+    });
+  });
+
 });
