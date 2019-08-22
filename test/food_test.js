@@ -44,6 +44,8 @@ describe("Foods", () => {
           res.body[0].should.be.a('object');
           res.body[0].name.should.equal('pizza')
           res.body[0].calories.should.equal(600)
+          res.body[0].should.not.have.property('createdAt')
+          res.body[0].should.not.have.property('updatedAt')
           res.body.should.have.lengthOf(2);
           done();
         });
@@ -59,6 +61,8 @@ describe("Foods", () => {
               res.body.should.be.a('object');
               res.body.name.should.equal('pizza');
               res.body.calories.should.equal(600);
+              res.body.should.not.have.property('createdAt')
+              res.body.should.not.have.property('updatedAt')
               done();
             });
        });
@@ -83,6 +87,8 @@ describe("Foods", () => {
             res.body.should.be.a('object');
             res.body.name.should.equal('big fries');
             res.body.calories.should.equal(1700);
+            res.body.should.not.have.property('createdAt')
+            res.body.should.not.have.property('updatedAt')
              Food.findOne({
               where: {name: 'big fries'}
             }).then(food =>{
@@ -118,6 +124,10 @@ describe("Foods", () => {
       .send({ "name": "pizza", "calories": "1700"})
       .end((err, res) => {
         res.should.have.status(200);
+        res.body.name.should.equal('pizza');
+        res.body.calories.should.equal(1700);
+        res.body.should.not.have.property('createdAt')
+        res.body.should.not.have.property('updatedAt')
         Food.findOne({
          where: {name: 'pizza'}
         }).then(food =>{

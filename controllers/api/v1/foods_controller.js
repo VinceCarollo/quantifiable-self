@@ -1,9 +1,11 @@
 var Food = require('../../../models').Food;
+var FoodPresenter = require('../../../pojos/food_presenter.js');
 
 var index = function (req, res) {
   Food.findAll()
-    .then(foods => {
+    .then(food_info => {
       res.setHeader("Content-Type", "application/json");
+      let foods = food_info.map(food => new FoodPresenter(food))
       res.status(200).send(JSON.stringify(foods));
     })
     .catch(error => {
@@ -18,9 +20,10 @@ var show = function(req, res) {
       id: req.params.id
     }
   })
-  .then(food => {
-    if (food) {
+  .then(food_info => {
+    if (food_info) {
       res.setHeader("Content-Type", "application/json");
+      let food = new FoodPresenter(food_info)
       res.status(200).send(JSON.stringify(food));
     } else {
       res.setHeader("Content-Type", "application/json");
@@ -39,10 +42,11 @@ var create = function(req, res) {
   Food.create({
     name: name,
     calories: calories
-  }).then(food => {
+  })
+  .then(food_info => {
       res.setHeader("Content-Type", "application/json");
-      res.status(200).send(JSON.stringify(food));
-    })
+      let food = new FoodPresenter(food_info)
+      res.status(200).send(JSON.stringify(food)) })
     .catch(error => {
       res.setHeader("Content-Type", "application/json");
       res.status(400).send({ error });
@@ -58,9 +62,10 @@ var update = function(req, res) {
       returning: true,
       where: { name: req.body.name }
     }
-  ).then(([rowsUpdate, [updatedFood] ]) => {
+  ).then(([rowsUpdate, [updatedFoodInfo] ]) => {
       res.setHeader("Content-Type", "application/json");
-      res.status(200).send(JSON.stringify(updatedFood));
+      let food = new FoodPresenter(updatedFoodInfo);
+      res.status(200).send(JSON.stringify(food));
     })
     .catch(error => {
       res.setHeader("Content-Type", "application/json");
