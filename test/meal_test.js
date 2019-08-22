@@ -87,6 +87,11 @@ describe("Meals", () => {
         res.body[0].foods[0].name.should.equal('pizza')
         res.body[0].foods.should.have.lengthOf(1);
         res.body[1].foods.should.have.lengthOf(2);
+        res.body[0].should.not.have.property('createdAt')
+        res.body[0].should.not.have.property('updatedAt')
+        res.body[0].foods[0].should.not.have.property('createdAt')
+        res.body[0].foods[0].should.not.have.property('updatedAt')
+        res.body[0].foods[0].should.not.have.property('MealFoods')
         res.body.should.have.lengthOf(2);
         done();
       });
@@ -103,6 +108,11 @@ describe("Meals", () => {
         res.body.foods.should.be.a("array");
         res.body.foods.should.have.lengthOf(2);
         res.body.foods[0].name.should.equal("pizza");
+        res.body.should.not.have.property('createdAt')
+        res.body.should.not.have.property('updatedAt')
+        res.body.foods[0].should.not.have.property('createdAt')
+        res.body.foods[0].should.not.have.property('updatedAt')
+        res.body.foods[0].should.not.have.property('MealFoods')
         done();
       });
     });
