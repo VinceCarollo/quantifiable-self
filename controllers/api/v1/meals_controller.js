@@ -1,6 +1,7 @@
 var Food = require('../../../models').Food;
 var Meal = require('../../../models').Meal;
 var MealFoods = require('../../../models').MealFoods;
+var MealPresenter = require('../../../pojos/meal_presenter')
 
 var index = function(req, res) {
   Meal.findAll({
@@ -11,8 +12,9 @@ var index = function(req, res) {
       }
     ]
   })
-  .then(meals => {
+  .then(meal_data => {
     res.setHeader("Content-Type", "application/json");
+    let meals = meal_data.map(meal => new MealPresenter(meal))
     res.status(200).send(JSON.stringify(meals));
   })
   .catch(error => {
@@ -30,9 +32,10 @@ var show = function(req, res) {
       }
     ]
   })
-  .then(meal => {
-    if (meal){
+  .then(meal_data => {
+    if (meal_data){
     res.setHeader("Content-Type", "application/json");
+    let meal =  new MealPresenter(meal_data)
     res.status(200).send(JSON.stringify(meal));
   } else {
     res.setHeader("Content-Type", "application/json");
