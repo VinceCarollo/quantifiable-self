@@ -8,11 +8,10 @@ var app = require('../app');
 chai.use(chaiHttp);
 chai.should();
 
-describe("GET /api/v1/recipes/search?food_type=chicken", () => {
+describe("GET /api/v1/recipes?sort=numIngredients", () => {
   it("should get all foods record", (done) => {
-    chai.request(app)
-    .get("/api/v1/recipes?sort=ingredient_count")
-    //Currently does not use ingredient_count in microservice, recipes index always sorts by ingredient_count
+    chai.request('localhost:3000')
+    .get("/api/v1/recipes?sort=numIngredients")
     .end((err, res) => {
       res.should.have.status(200);
       res.body.forEach(function(recipe,index,recipes) {

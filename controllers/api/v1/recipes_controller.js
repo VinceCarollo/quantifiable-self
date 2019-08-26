@@ -14,7 +14,6 @@ var index = function(req, res) {
   .then(meal_data => {
 console.log(meal_data);
     res.setHeader("Content-Type", "application/json");
-    // let meals = meal_data.map(meal => new MealPresenter(meal))
     res.status(200).send(JSON.stringify(meal_data));
   })
   .catch(error => {
