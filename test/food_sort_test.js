@@ -10,7 +10,7 @@ chai.should();
 
 describe("GET /api/v1/recipes?sort=numIngredients", () => {
   it("should get all foods record", (done) => {
-    chai.request('localhost:3000')
+    chai.request("https://calorie-coacher-recipes.herokuapp.com")
     .get("/api/v1/recipes?sort=numIngredients")
     .end((err, res) => {
       res.should.have.status(200);
