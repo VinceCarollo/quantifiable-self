@@ -7,6 +7,11 @@ const fetch = require('node-fetch')
 var index = function(req, res) {
   console.log(req.query);
   var url = new URL("https://calorie-coacher-recipes.herokuapp.com/api/v1/recipes")
+  // var params = {
+  //     q: '*',
+  //
+  //   }
+    Object.keys(req.query).forEach(key => url.searchParams.append(key, req.query[key]))
   fetch(url)
   .then(res => {
         return res.json()
