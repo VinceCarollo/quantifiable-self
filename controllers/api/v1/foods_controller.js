@@ -42,7 +42,6 @@ var show = function(req, res) {
 
 var create = function(req, res) {
   let name = req.body.name
-  console.log(req.body);
   let calories = parseInt(req.body.calories)
   Food.create({
     name: name,
