@@ -4,10 +4,8 @@ var should = require('chai').should();
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../app');
-// var Recipe = require('../models').Recipe;
-
 chai.use(chaiHttp);
-chai.should();
+
 describe("Works with our  microservice", () => {
 describe("GET /api/v1/recipes/search?food_type=chicken", () => {
   it("should get all foods record", (done) => {

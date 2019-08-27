@@ -6,7 +6,6 @@ var chaiHttp = require('chai-http');
 var app = require('../app');
 
 chai.use(chaiHttp);
-chai.should();
 
 describe("GET /api/v1/recipes/average_calories?q=chicken", () => {
   it("should get all foods record", (done) => {
@@ -14,7 +13,6 @@ describe("GET /api/v1/recipes/average_calories?q=chicken", () => {
     .get("/api/v1/recipes/average_calories?q=chicken")
     .end((err, res) => {
       res.should.have.status(200);
-      console.log(res.body);
       res.body.should.have.property('food_type')
       res.body.should.have.property('calorie_average_per_serving')
       done();

@@ -6,7 +6,6 @@ var chaiHttp = require('chai-http');
 var app = require('../app');
 
 chai.use(chaiHttp);
-chai.should();
 
 describe("GET /api/v1/recipes?sort=numIngredients", () => {
   it("should get all foods record", (done) => {

@@ -8,7 +8,6 @@ var app = require('../app');
 var Food = require('../models').Food;
 
 chai.use(chaiHttp);
-chai.should();
 
 describe("Foods", () => {
 

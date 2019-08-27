@@ -5,6 +5,8 @@ var index = function (req, res) {
   Food.findAll()
     .then(food_info => {
       res.setHeader("Content-Type", "application/json");
+      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       let foods = food_info.map(food => new FoodPresenter(food))
       res.status(200).send(JSON.stringify(foods));
     })
@@ -22,7 +24,9 @@ var show = function(req, res) {
   })
   .then(food_info => {
     if (food_info) {
-      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Content-Type", "application/json")
+      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(food_info)
       res.status(200).send(JSON.stringify(food));
     } else {
@@ -44,13 +48,20 @@ var create = function(req, res) {
     calories: calories
   })
   .then(food_info => {
-      res.setHeader("Content-Type", "application/json");
-      let food = new FoodPresenter(food_info)
-      res.status(200).send(JSON.stringify(food)) })
-    .catch(error => {
-      res.setHeader("Content-Type", "application/json");
-      res.status(400).send({ error });
-    })
+    console.log(food_info.name);
+    if (food_info.name === '') {
+      throw 'Empty Name'
+    }
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Access-Control-Allow-Methods", 'POST');
+    res.setHeader("Access-Control-Allow-Origin", '*');
+    let food = new FoodPresenter(food_info);
+    res.status(200).send(JSON.stringify(food));
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send({ error });
+  })
 }
 
 var update = function(req, res) {
@@ -64,6 +75,8 @@ var update = function(req, res) {
     }
   ).then(([rowsUpdate, [updatedFoodInfo] ]) => {
       res.setHeader("Content-Type", "application/json");
+      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(updatedFoodInfo);
       res.status(200).send(JSON.stringify(food));
     })
@@ -82,6 +95,8 @@ var destroy = function(req, res) {
     .then(food=> {
       if (food){
       res.setHeader("Content-Type", "application/json");
+      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       res.status(204).send();
     } else {
       res.setHeader("Content-Type", "application/json");
@@ -94,9 +109,6 @@ var destroy = function(req, res) {
       res.status(500).send();
     })
 }
-
-
-
 module.exports = {
   index: index,
   show: show,

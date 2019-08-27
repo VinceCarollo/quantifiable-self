@@ -51,23 +51,19 @@ var show = function(req, res) {
 
 var addFood = async function(req, res) {
   let food = await Food.findOne({
-    where: {
-      id: req.params.food_id
-    }
+    where: { id: req.params.food_id }
   })
   let meal = await Meal.findOne({
-    where: {
-      id: req.params.id
-    }
+    where: { id: req.params.id }
   })
   if (meal && food) {
     MealFoods.create({
-      foodId: food.dataValues.id,
-      mealId: meal.dataValues.id
+      foodId: food.id,
+      mealId: meal.id
     })
     .then(() => {
       res.setHeader("Content-Type", "application/json");
-      res.status(201).send({ message: `Successfully added ${food.dataValues.name} to ${meal.dataValues.name}` });
+      res.status(201).send({ message: `Successfully added ${food.name} to ${meal.name}` });
     })
     .catch(error => {
       res.setHeader("Content-Type", "application/json");
@@ -81,20 +77,16 @@ var addFood = async function(req, res) {
 
 var removeFood = async function(req, res) {
   let food = await Food.findOne({
-    where: {
-      id: req.params.food_id
-    }
+    where: {id: req.params.food_id}
   })
   let meal = await Meal.findOne({
-    where: {
-      id: req.params.id
-    }
+    where: { id: req.params.id }
   })
   if (meal && food) {
     MealFoods.destroy({
       where:{
-        foodId: food.dataValues.id,
-        mealId: meal.dataValues.id
+        foodId: food.id,
+        mealId: meal.id
       }
     })
     .then(() => {

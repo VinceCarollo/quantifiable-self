@@ -1,25 +1,13 @@
-// var Food = require('../../../models').Food;
-// var Meal = require('../../../models').Meal;
-// var MealFoods = require('../../../models').MealFoods;
-// var MealPresenter = require('../../../pojos/meal_presenter')
 const fetch = require('node-fetch')
 
 var index = function(req, res) {
-  console.log(req.query);
-  var url = new URL("https://calorie-coacher-recipes.herokuapp.com/api/v1/recipes")
-  // var params = {
-  //     q: '*',
-  //
-  //   }
-    Object.keys(req.query).forEach(key => url.searchParams.append(key, req.query[key]))
-  fetch(url)
+  fetch(query_microservice(req.query))
   .then(res => {
         return res.json()
       })
-  .then(meal_data => {
-console.log(meal_data);
+  .then(recipe_data => {
     res.setHeader("Content-Type", "application/json");
-    res.status(200).send(JSON.stringify(meal_data));
+    res.status(200).send(JSON.stringify(recipe_data));
   })
   .catch(error => {
     res.setHeader("Content-Type", "application/json");
@@ -27,8 +15,11 @@ console.log(meal_data);
   })
 }
 
-
-
+function query_microservice(params){
+  var url = new URL("https://calorie-coacher-recipes.herokuapp.com/api/v1/recipes")
+    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+    return url
+}
 
 module.exports = {
   index: index
