@@ -49,11 +49,16 @@ var create = function(req, res) {
     calories: calories
   })
   .then(food_info => {
+    console.log(food_info.name);
+    if (food_info.name === '') {
+      throw 'Empty Name'
+    }
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Methods", 'POST');
     res.setHeader("Access-Control-Allow-Origin", '*');
-    let food = new FoodPresenter(food_info)
-    res.status(200).send(JSON.stringify(food)) })
+    let food = new FoodPresenter(food_info);
+    res.status(200).send(JSON.stringify(food));
+  })
   .catch(error => {
     res.setHeader("Content-Type", "application/json");
     res.status(400).send({ error });
