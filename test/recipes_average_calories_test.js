@@ -7,18 +7,15 @@ var app = require('../app');
 
 chai.use(chaiHttp);
 
-describe("GET /api/v1/recipes?sort=numIngredients", () => {
+describe("GET /api/v1/recipes/average_calories?q=chicken", () => {
   it("should get all foods record", (done) => {
     chai.request(app)
-    .get("/api/v1/recipes?sort=numIngredients")
+    .get("/api/v1/recipes/average_calories?q=chicken")
     .end((err, res) => {
       res.should.have.status(200);
-      res.body.forEach(function(recipe,index,recipes) {
-        if(recipes[index-1]){ //do not compare zeroith index with negative first index
-        assert(recipe.numIngredients >= recipes[index-1].numIngredients)
-      }
-      })
+      res.body.should.have.property('food_type')
+      res.body.should.have.property('calorie_average_per_serving')
       done();
+      })
     });
   });
-});

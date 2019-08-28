@@ -5,7 +5,7 @@ var index = function (req, res) {
   Food.findAll()
     .then(food_info => {
       res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Methods", 'GET');
+      res.setHeader("Access-Control-Allow-Methods", 'GET, POST');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let foods = food_info.map(food => new FoodPresenter(food))
       res.status(200).send(JSON.stringify(foods));
@@ -26,7 +26,7 @@ var show = function(req, res) {
   .then(food_info => {
     if (food_info) {
       res.setHeader("Content-Type", "application/json")
-      res.setHeader("Access-Control-Allow-Methods", 'GET');
+      res.setHeader("Access-Control-Allow-Methods", 'GET, POST');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(food_info)
       res.status(200).send(JSON.stringify(food));
@@ -78,7 +78,7 @@ var update = function(req, res) {
     }
   ).then(([rowsUpdate, [updatedFoodInfo] ]) => {
       res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Methods", 'PATCH');
+      res.setHeader("Access-Control-Allow-Methods", 'PATCH, POST');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(updatedFoodInfo);
       res.status(200).send(JSON.stringify(food));
@@ -101,6 +101,10 @@ var destroy = function(req, res) {
       })
     .then(food=> {
       if (food){
+
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       res.status(204).send();
     } else {
       res.status(404).send();
@@ -119,8 +123,6 @@ var corsHeaders = function(req, res) {
   res.setHeader("Access-Control-Max-Age", '600');
   res.send()
 }
-
-
 
 module.exports = {
   index: index,

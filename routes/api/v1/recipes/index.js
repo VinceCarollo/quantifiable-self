@@ -3,5 +3,4 @@ var recipesController = require('../../../../controllers/api/v1/recipes_controll
 
 router.get('/', recipesController.index)
 
-
 module.exports = router;

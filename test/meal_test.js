@@ -1,16 +1,13 @@
 var assert = require('assert');
 var expect = require('chai').expect;
 var should = require('chai').should();
-// Import the dependencies for testing
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../app');
 var Food = require('../models').Food;
 var Meal = require('../models').Meal;
 var MealFoods = require('../models').MealFoods;
-// Configure chai
 chai.use(chaiHttp);
-chai.should();
 
 describe("Meals", () => {
 
