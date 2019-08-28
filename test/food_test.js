@@ -22,6 +22,11 @@ describe("Foods", () => {
         id: 9010,
         name: 'salad',
         calories: 100
+      },
+      {
+        id: 9011,
+        name: 'nachos',
+        calories: 200
       }
     ])
   })
@@ -44,11 +49,36 @@ describe("Foods", () => {
           res.body[0].calories.should.equal(600)
           res.body[0].should.not.have.property('createdAt')
           res.body[0].should.not.have.property('updatedAt')
-          res.body.should.have.lengthOf(2);
+          res.body.should.have.lengthOf(3);
           done();
         });
       });
     });
+
+    describe("GET /api/v1/foods?limit=2", () => {
+        it("should get 2 foods record", (done) => {
+          chai.request(app)
+          .get('/api/v1/foods?limit=2')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body[0].should.be.a('object');
+            res.body.should.have.lengthOf(2);
+            done();
+          });
+        });
+      });
+    describe("GET /api/v1/foods?limit=5", () => {
+        it("should get all foods record if limit greater than food count", (done) => {
+          chai.request(app)
+          .get('/api/v1/foods?limit=5')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body[0].should.be.a('object');
+            res.body.should.have.lengthOf(3);
+            done();
+          });
+        });
+      });
 
     describe("GET /api/v1/foods/:id", () => {
       it("should get a single food record", (done) => {

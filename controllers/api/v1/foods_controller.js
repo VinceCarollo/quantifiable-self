@@ -2,7 +2,8 @@ var Food = require('../../../models').Food;
 var FoodPresenter = require('../../../pojos/food_presenter.js');
 
 var index = function (req, res) {
-  Food.findAll()
+  Food.findAll({limit: req.query.limit}
+)
     .then(food_info => {
       res.setHeader("Content-Type", "application/json");
       res.setHeader("Access-Control-Allow-Methods", 'GET, POST');
