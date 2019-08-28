@@ -93,6 +93,26 @@ describe("Meals", () => {
         done();
       });
     });
+    it("should get all meals records limit 2", (done) => {
+      chai.request(app)
+      .get('/api/v1/meals?limit=2')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body[0].should.be.a('object');
+        res.body.should.have.lengthOf(2);
+        done();
+      });
+    });
+    it("should get all meals records limit 5", (done) => {
+      chai.request(app)
+      .get('/api/v1/meals?limit=5')
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body[0].should.be.a('object');
+        res.body.should.have.lengthOf(3);
+        done();
+      });
+    });
   });
   describe("GET /api/v1/meals/:id/foods", () => {
     it("should get one meal record", (done) => {
