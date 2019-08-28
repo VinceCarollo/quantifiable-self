@@ -4,6 +4,9 @@ Calorie coacher is a calorie tracking/recipe app build in NodeJS. It consists of
 - A microservice for getting recipes using the edamam API @ https://github.com/Patrick-Duvall/calorie-coacher-recipes
 - **This app** which serves API endpoints for foods and meals. This app hits the microservice for some functionality and is hit by the below frontend.
 - A frontend that hits both this app and the microservice to display data to a user https://github.com/VinceCarollo/calorie_coacher_fe
+- Meal and food information is stored on the main app via a many-to-many. Recipes functionally have a many-to-many relationship with foods but we don't store this relation in the database. Rather in exists when our main service queries our microservice with a food type and we get back recipes containing this food type.
+
+![schema](https://user-images.githubusercontent.com/35322570/63884680-e15f3780-c993-11e9-8a57-7998f0e0d2c4.png)
 
 ## Local Setup
 To run this endpoint on your local machine first `git clone git@github.com:Patrick-Duvall/quantifiable-self.git`
@@ -181,12 +184,41 @@ Successfully returns the average calorie total for all recipes that contain `q`,
 }
 ```
 Returns a 404 if no foods are found with food type given.
+## Sending GET /api/v1/recipes?sort=numIngredient
+Successfully returns all recipes sorted by ingredient count:
+
+```
+[
+  {
+    calories: 200,
+    carbs: 17,
+    name: "chicken fried rice",
+    protein: 6,
+    preperation_time: '8 days',
+    number_of_ingredients: 3,
+    cuisine_type: 'chinese',
+    servings: 10,
+    thumbnail: "https://www.edamam.com/web-img/146/146c072c175df9f407f9516a3f6466eb.jpg",
+    url: "http://www.101cookbooks.com/archives/a-frozen-yogurt-recipe-to-rival-pinkberrys-recipe.html"
+  },
+  {
+    calories: 200,
+    carbs: 17,
+    name: "tacos",
+    protein: 6,
+    preperation_time: '8 days',
+    number_of_ingredients: 4,
+    cuisine_type: 'chinese',
+    servings: 10,
+    thumbnail: "https://www.edamam.com/web-img/146/146c072c175df9f407f9516a3f6466eb.jpg",
+    url: "http://www.101cookbooks.com/archives/a-frozen-yogurt-recipe-to-rival-pinkberrys-recipe.html"
+  }
+]
+```
+Currently numIngredient is the only supported sort function.
 
 ## Running Tests
 Tests are written in [Mocha](https://mochajs.org/) and [Chai](https://chaijs.com/). The tests that hit the recipe microservice use the live, hosted microservice, which has its environmental variables configured to hit the Edamam API. As such, testing consists of running `npm test` to run the test suite. Make sure you've run `npm install` in the initial setup.
-## Schema Design
-
-
 
 ## Built With
 * [JavaScript](https://www.javascript.com/)
