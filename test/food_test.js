@@ -58,7 +58,7 @@ describe("Foods", () => {
     describe("GET /api/v1/foods?limit=2", () => {
         it("should get 2 foods record", (done) => {
           chai.request(app)
-          .get('/api/v1/foods')
+          .get('/api/v1/foods?limit=2')
           .end((err, res) => {
             res.should.have.status(200);
             res.body[0].should.be.a('object');
@@ -70,7 +70,7 @@ describe("Foods", () => {
     describe("GET /api/v1/foods?limit=5", () => {
         it("should get all foods record if limit greater than food count", (done) => {
           chai.request(app)
-          .get('/api/v1/foods')
+          .get('/api/v1/foods?limit=5')
           .end((err, res) => {
             res.should.have.status(200);
             res.body[0].should.be.a('object');
