@@ -11,5 +11,7 @@ router.patch('/', foodsController.update)
 
 router.delete('/:id', foodsController.destroy)
 
+router.options('/:id', foodsController.corsHeaders)
+
 
 module.exports = router;
