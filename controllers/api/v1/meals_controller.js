@@ -5,6 +5,7 @@ var MealPresenter = require('../../../pojos/meal_presenter')
 
 var index = function(req, res) {
   Meal.findAll({
+    limit: req.query.limit,
     include: [
       {
         model: Food,
