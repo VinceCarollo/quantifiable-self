@@ -5,12 +5,13 @@ var index = function (req, res) {
   Food.findAll()
     .then(food_info => {
       res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Methods", 'GET');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let foods = food_info.map(food => new FoodPresenter(food))
       res.status(200).send(JSON.stringify(foods));
     })
     .catch(error => {
+      console.log(error);
       res.setHeader("Content-Type", "application/json");
       res.status(500).send({ error });
     })
@@ -25,7 +26,7 @@ var show = function(req, res) {
   .then(food_info => {
     if (food_info) {
       res.setHeader("Content-Type", "application/json")
-      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Methods", 'GET');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(food_info)
       res.status(200).send(JSON.stringify(food));
@@ -75,7 +76,7 @@ var update = function(req, res) {
     }
   ).then(([rowsUpdate, [updatedFoodInfo] ]) => {
       res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Methods", 'PATCH');
       res.setHeader("Access-Control-Allow-Origin", '*');
       let food = new FoodPresenter(updatedFoodInfo);
       res.status(200).send(JSON.stringify(food));
@@ -87,6 +88,7 @@ var update = function(req, res) {
 }
 
 var destroy = function(req, res) {
+  console.log('!!!!!HERE!!!!!!')
   Food.destroy({
       where: {
         id: req.params.id
@@ -94,11 +96,12 @@ var destroy = function(req, res) {
       })
     .then(food=> {
       if (food){
-      res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Methods", 'POST');
+      res.setHeader("Access-Control-Allow-Methods", 'DELETE');
       res.setHeader("Access-Control-Allow-Origin", '*');
       res.status(204).send();
     } else {
+      res.setHeader("Access-Control-Allow-Methods", 'DELETE');
+      res.setHeader("Access-Control-Allow-Origin", '*');
       res.setHeader("Content-Type", "application/json");
       res.status(404).send();
     }
