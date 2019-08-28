@@ -37,6 +37,10 @@ describe("Meals", () => {
       {
         id: 8010,
         name: 'Lunch'
+      },
+      {
+        id: 8011,
+        name: 'Dinner'
       }
     ])
     await MealFoods.bulkCreate([
@@ -89,7 +93,7 @@ describe("Meals", () => {
         res.body[0].foods[0].should.not.have.property('createdAt')
         res.body[0].foods[0].should.not.have.property('updatedAt')
         res.body[0].foods[0].should.not.have.property('MealFoods')
-        res.body.should.have.lengthOf(2);
+        res.body.should.have.lengthOf(3);
         done();
       });
     });
