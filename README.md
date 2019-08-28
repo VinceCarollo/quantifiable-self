@@ -190,25 +190,21 @@ Successfully returns all recipes sorted by ingredient count:
 ```
 [
   {
-    calories: 200,
-    carbs: 17,
     name: "chicken fried rice",
-    protein: 6,
-    preperation_time: '8 days',
-    number_of_ingredients: 3,
+    calories: 200,
+    prepTime: 75,
+    numIngredients: 3,
     cuisine_type: 'chinese',
     servings: 10,
     thumbnail: "https://www.edamam.com/web-img/146/146c072c175df9f407f9516a3f6466eb.jpg",
     url: "http://www.101cookbooks.com/archives/a-frozen-yogurt-recipe-to-rival-pinkberrys-recipe.html"
   },
-  {
-    calories: 200,
-    carbs: 17,
+   {
     name: "tacos",
-    protein: 6,
-    preperation_time: '8 days',
-    number_of_ingredients: 4,
-    cuisine_type: 'chinese',
+    calories: 250,
+    prepTime: 60,
+    numIngredients: 4,
+    cuisine_type: 'mexican',
     servings: 10,
     thumbnail: "https://www.edamam.com/web-img/146/146c072c175df9f407f9516a3f6466eb.jpg",
     url: "http://www.101cookbooks.com/archives/a-frozen-yogurt-recipe-to-rival-pinkberrys-recipe.html"
