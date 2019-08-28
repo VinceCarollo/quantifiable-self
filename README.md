@@ -184,7 +184,7 @@ Successfully returns the average calorie total for all recipes that contain `q`,
 }
 ```
 Returns a 404 if no foods are found with food type given.
-## Sending GET /api/v1/recipes?sort=numIngredient
+## GET /api/v1/recipes?sort=numIngredient
 Successfully returns all recipes sorted by ingredient count:
 
 ```
@@ -215,7 +215,7 @@ Successfully returns all recipes sorted by ingredient count:
   }
 ]
 ```
-Currently numIngredient is the only supported sort function.
+Currently numIngredients is the only supported sort function.
 
 ## Running Tests
 Tests are written in [Mocha](https://mochajs.org/) and [Chai](https://chaijs.com/). The tests that hit the recipe microservice use the live, hosted microservice, which has its environmental variables configured to hit the Edamam API. As such, testing consists of running `npm test` to run the test suite. Make sure you've run `npm install` in the initial setup.
