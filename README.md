@@ -222,7 +222,7 @@ Tests are written in [Mocha](https://mochajs.org/) and [Chai](https://chaijs.com
 
 ## Built With
 * [JavaScript](https://www.javascript.com/)
-* [jQuery](https://jquery.com/)
+* [Postgres](https://www.postgresql.org/)
 * [Express](https://expressjs.com/)
 * [Mocha](https://mochajs.org/)
 * [Chai](https://chaijs.com/)
