@@ -175,7 +175,7 @@ Returns 404 if either meal or food cannot be found
 - Returns 404 if either meal or food cannot be found
 
 ## Recipe endpoints
-### GET /api/v1/recipes/average_calorie_total?q=chicken
+### GET /api/v1/recipes/average_calories?q=chicken
 Successfully returns the average calorie total for all recipes that contain `q`, a food ingredient, in the format:
 ```
 {
