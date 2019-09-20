@@ -222,3 +222,11 @@ Tests are written in [Mocha](https://mochajs.org/) and [Chai](https://chaijs.com
 * [Express](https://expressjs.com/)
 * [Mocha](https://mochajs.org/)
 * [Chai](https://chaijs.com/)
+
+## Contributers
+
+- [Vince Carollo](https://github.com/vincecarollo)
+- [Patrick Duvall](https://github.com/Patrick-Duvall)
+
+
+
